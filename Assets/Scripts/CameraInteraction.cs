@@ -43,6 +43,7 @@ public class CameraInteraction : MonoBehaviour
                 ObjectPick.transform.position = positionInteraction.position;
                 ObjectPick.transform.rotation = positionInteraction.rotation;
                 ObjectPick.GetComponent<Collider>().isTrigger = true;
+                ObjectPick.GetComponent<TrocarInteraction>().prenderHolograma?.Invoke();
                 ObjectPick.GetComponent<Rigidbody>().useGravity = false;
                 ObjectPick.GetComponent<Rigidbody>().isKinematic = true;
                 herramientain = true;
@@ -58,6 +59,7 @@ public class CameraInteraction : MonoBehaviour
         ObjectPick.GetComponent<Rigidbody>().useGravity = true;
         ObjectPick.GetComponent<Rigidbody>().isKinematic = false;
         ObjectPick.GetComponent<Collider>().isTrigger = false;
+        ObjectPick.GetComponent<TrocarInteraction>().prenderHolograma?.Invoke();
         ObjectPick = null;
         herramientain = false;
     }
