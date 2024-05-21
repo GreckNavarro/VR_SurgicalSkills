@@ -7,12 +7,14 @@ public class TrocarInteraction : Interactable
 {
     public  Action prenderHolograma;
     public Action offHologram;
+    public Action<Transform> hologramIdeal;
     [SerializeField] GameObject holograma;
     bool active = false;
 
     private void OnEnable()
     {
         prenderHolograma += ChangeBool;
+        hologramIdeal += PutPosition;
     }
     private void OnDisable()
     {
@@ -25,6 +27,10 @@ public class TrocarInteraction : Interactable
         Interact();
     }
 
+    public void PutPosition(Transform position)
+    {
+        position = holograma.transform;
+    }
     public override void Interact()
     {
      

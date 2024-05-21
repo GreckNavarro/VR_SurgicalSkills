@@ -11,7 +11,7 @@ public class CameraInteraction : MonoBehaviour
     [SerializeField] bool herramientain = false;
     [SerializeField] GameObject ObjectPick;
     [SerializeField] Transform positionInteraction;
-
+    public bool isOnArea;
 
 
     private void Update()
@@ -29,6 +29,13 @@ public class CameraInteraction : MonoBehaviour
                 DejarObject();
             }
             
+        }
+        if (isOnArea)
+        {
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                ObjectPick.GetComponent<TrocarInteraction>().PutPosition(ObjectPick.transform);
+            }
         }
     }
     public void GetObject()
@@ -62,5 +69,22 @@ public class CameraInteraction : MonoBehaviour
         ObjectPick.GetComponent<TrocarInteraction>().prenderHolograma?.Invoke();
         ObjectPick = null;
         herramientain = false;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("AreaBody"))
+        {
+            if (ObjectPick != null)
+            {
+                isOnArea = true;
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("AreaBody"))
+        {
+            isOnArea = false;
+        }
     }
 }
