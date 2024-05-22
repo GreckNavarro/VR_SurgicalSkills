@@ -30,11 +30,13 @@ public class CameraInteraction : MonoBehaviour
             }
             
         }
-        if (isOnArea)
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (isOnArea)
             {
+                ObjectPick.transform.SetParent(null);
                 ObjectPick.GetComponent<TrocarInteraction>().PutPosition(ObjectPick.transform);
+                Debug.Log("Termine");
             }
         }
     }
