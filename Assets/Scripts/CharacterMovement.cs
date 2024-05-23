@@ -6,6 +6,7 @@ public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] Rigidbody rb;
+    [SerializeField] FootStepSound footstep;
 
     private void Start()
     {
@@ -26,6 +27,11 @@ public class CharacterMovement : MonoBehaviour
             Vector3 direction = move;
             
             velocity = direction * speed;
+            footstep.PlayFootstepSound();
+        }
+        else
+        {
+            footstep.StopFootStepSound();
         }
         velocity.y = rb.velocity.y;
         rb.velocity = velocity;
