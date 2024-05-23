@@ -19,11 +19,11 @@ public class CharacterMovement : MonoBehaviour
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-
+        Vector3 move = transform.right * horizontal + transform.forward * vertical;
         Vector3 velocity = Vector3.zero;
         if(horizontal != 0 || vertical != 0)
         {
-            Vector3 direction = (transform.forward * vertical + transform.right * horizontal).normalized;
+            Vector3 direction = move;
             
             velocity = direction * speed;
         }

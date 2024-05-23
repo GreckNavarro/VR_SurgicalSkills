@@ -35,7 +35,9 @@ public class CameraInteraction : MonoBehaviour
             if (isOnArea)
             {
                 ObjectPick.transform.SetParent(null);
-                ObjectPick.GetComponent<TrocarInteraction>().PutPosition(ObjectPick.transform);
+                ObjectPick.GetComponent<TrocarInteraction>().hologramIdeal?.Invoke(ObjectPick.transform);
+                ObjectPick = null;
+                herramientain = false;
                 Debug.Log("Termine");
             }
         }
