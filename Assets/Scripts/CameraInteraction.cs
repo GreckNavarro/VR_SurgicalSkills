@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraInteraction : MonoBehaviour
 {
@@ -12,7 +13,6 @@ public class CameraInteraction : MonoBehaviour
     [SerializeField] GameObject ObjectPick;
     [SerializeField] Transform positionInteraction;
     public bool isOnArea;
-
 
     private void Update()
     {
