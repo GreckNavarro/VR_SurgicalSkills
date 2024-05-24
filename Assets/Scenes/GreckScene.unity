@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 550553340}
   - component: {fileID: 550553339}
   - component: {fileID: 550553338}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: TrocarHolograma (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 807492399}
   - component: {fileID: 807492398}
   - component: {fileID: 807492397}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: TrocarHolograma
   m_TagString: Untagged
   m_Icon: {fileID: 0}

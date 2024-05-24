@@ -36,6 +36,7 @@ public class CameraInteraction : MonoBehaviour
             {
                 ObjectPick.transform.SetParent(null);
                 ObjectPick.GetComponent<TrocarInteraction>().hologramIdeal?.Invoke(ObjectPick.transform);
+                ObjectPick.layer = default;
                 ObjectPick = null;
                 herramientain = false;
                 Debug.Log("Termine");

@@ -31,6 +31,7 @@ public class TrocarInteraction : Interactable
     {
         position.position = holograma.transform.position;
         position.rotation = holograma.transform.rotation;
+        holograma.SetActive(false);
     }
     public override void Interact()
     {
