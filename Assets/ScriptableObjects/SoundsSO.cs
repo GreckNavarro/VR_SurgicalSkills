@@ -11,11 +11,17 @@ public class SoundsSO : ScriptableObject
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private string channelVolume;
     [SerializeField] private float currentVolume;
+    public Action<Slider> cargarPreferencia;
     //private bool ismuted = true;
+
     private void OnEnable()
     {
+        cargarPreferencia += LoadPreference;
     }
-
+    private void OnDisable()
+    {
+        cargarPreferencia -= LoadPreference;
+    }
     public void UpdateVolume(Slider slider)
     {
         currentVolume = slider.value;

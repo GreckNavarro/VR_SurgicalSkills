@@ -1351,6 +1351,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809499374}
   m_CullTransparentMesh: 1
+--- !u!1 &815848639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 815848641}
+  - component: {fileID: 815848640}
+  m_Layer: 0
+  m_Name: AjustesController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &815848640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815848639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9b9dc456d5724a4daec56adc239f66f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sonidos:
+  - {fileID: 11400000, guid: 7a77a0b82000e1b4e8c3eda12ff26384, type: 2}
+  - {fileID: 11400000, guid: f685d6a26bfd4a94b9a7fba415286d83, type: 2}
+  - {fileID: 11400000, guid: 249937e6ee7259446befdc774b137660, type: 2}
+  sliders:
+  - {fileID: 228925413}
+  - {fileID: 1654657371}
+  - {fileID: 1684006017}
+--- !u!4 &815848641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815848639}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1049.4135, y: 574.707, z: 640.3323}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &899750965
 GameObject:
   m_ObjectHideFlags: 0
@@ -3092,42 +3144,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 7a77a0b82000e1b4e8c3eda12ff26384, type: 2}
-        m_TargetAssemblyTypeName: SoundsSO, Assembly-CSharp
-        m_MethodName: LoadPreference
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 228925413}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: f685d6a26bfd4a94b9a7fba415286d83, type: 2}
-        m_TargetAssemblyTypeName: SoundsSO, Assembly-CSharp
-        m_MethodName: LoadPreference
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1654657371}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: 249937e6ee7259446befdc774b137660, type: 2}
-        m_TargetAssemblyTypeName: SoundsSO, Assembly-CSharp
-        m_MethodName: LoadPreference
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 1684006017}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
 --- !u!114 &1872517706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3530,3 +3546,4 @@ SceneRoots:
   - {fileID: 1726634664}
   - {fileID: 2136454648}
   - {fileID: 379177034}
+  - {fileID: 815848641}
