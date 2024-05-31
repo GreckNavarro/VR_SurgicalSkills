@@ -11,12 +11,9 @@ public class SoundsSO : ScriptableObject
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private string channelVolume;
     [SerializeField] private float currentVolume;
-    private const string VolumePrefKey = "VolumePref";
     //private bool ismuted = true;
-    [SerializeField] private float defaultVolume = 1f;
     private void OnEnable()
     {
-        LoadPreference();
     }
 
     public void UpdateVolume(Slider slider)
@@ -28,13 +25,14 @@ public class SoundsSO : ScriptableObject
 
     private void SavePreference()
     {
-        PlayerPrefs.SetFloat(VolumePrefKey, currentVolume);
+        PlayerPrefs.SetFloat(channelVolume, currentVolume);
         PlayerPrefs.Save();
     }
 
-    private void LoadPreference()
+    public void LoadPreference(Slider slider)
     {
-        currentVolume = PlayerPrefs.GetFloat(VolumePrefKey, defaultVolume);
+        slider.value = currentVolume;
+        currentVolume = PlayerPrefs.GetFloat(channelVolume, currentVolume);
         mixer.SetFloat(channelVolume, Mathf.Log10(currentVolume) * 20f);
     }
     //public void MuteVolume()
