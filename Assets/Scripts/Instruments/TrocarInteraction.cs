@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
 public class TrocarInteraction : Interactable
 {
     public  Action prenderHolograma;
@@ -10,6 +11,11 @@ public class TrocarInteraction : Interactable
     public Action<Transform> hologramIdeal;
     [SerializeField] GameObject holograma;
     bool active = false;
+
+    
+    
+    
+    
 
     private void OnEnable()
     {
