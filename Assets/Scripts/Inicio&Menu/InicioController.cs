@@ -1,22 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class InicioController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] SoundSelectionSO mySoundSelection;
 
-    // Update is called once per frame
     void Update()
     {
         foreach (KeyCode key in System.Enum.GetValues(typeof(KeyCode)))
         {
             if (Input.GetKeyDown(key))
             {
+                mySoundSelection.StartSoundSelection();
                 ChargeLevelController.instance.FadeToLevel(1);
             }
         }
