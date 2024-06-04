@@ -18,13 +18,18 @@ public class CameraInteraction : MonoBehaviour
     public bool isOnArea;
 
 
-    XRControllerInput XRControllerInput;
 
     private void OnEnable()
     {
         XRControllerInput.rightGripButtonPressed += GetObjectRigth;
         XRControllerInput.rightGripButtonReleased += DejarObject;
         XRControllerInput.leftGripButtonPressed += GetObjectLeft;
+    }
+    private void OnDisable()
+    {
+        XRControllerInput.rightGripButtonPressed -= GetObjectRigth;
+        XRControllerInput.rightGripButtonReleased -= DejarObject;
+        XRControllerInput.leftGripButtonPressed -= GetObjectLeft;
     }
 
     private void Update()
@@ -38,20 +43,7 @@ public class CameraInteraction : MonoBehaviour
 
      
        
-    
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (isOnArea)
-            {
-                ObjectPick.transform.SetParent(null);
-                ObjectPick.GetComponent<TrocarInteraction>().hologramIdeal?.Invoke(ObjectPick.transform);
-                ObjectPick.layer = default;
-                ObjectPick = null;
-                herramientain = false;
-                Debug.Log("Termine");
-            }
-        }
+   
     }
     public void GetObjectRigth()
     {
@@ -60,7 +52,9 @@ public class CameraInteraction : MonoBehaviour
         {
             if (ObjectPick == null)
             {
+                
                 ObjectPick = hit.transform.gameObject;
+                ObjectPick.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Discrete;
                 ObjectPick.transform.SetParent(positionInteraction);
                 ObjectPick.transform.position = positionInteraction.position;
                 ObjectPick.transform.rotation = positionInteraction.rotation;
@@ -75,25 +69,30 @@ public class CameraInteraction : MonoBehaviour
     }
     public void DejarObject()
     {
-        if (isOnArea)
+        if(ObjectPick != null)
         {
-            ObjectPick.transform.SetParent(null);
-            ObjectPick.GetComponent<TrocarInteraction>().hologramIdeal?.Invoke(ObjectPick.transform);
-            ObjectPick.layer = default;
-            ObjectPick = null;
-            herramientain = false;
-            Debug.Log("Termine");
+            ObjectPick.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
+            if (isOnArea)
+            {
+                ObjectPick.transform.SetParent(null);
+                ObjectPick.GetComponent<TrocarInteraction>().hologramIdeal?.Invoke(ObjectPick.transform);
+                ObjectPick.layer = default;
+                ObjectPick = null;
+                herramientain = false;
+                Debug.Log("Termine");
+            }
+            else
+            {
+                ObjectPick.transform.SetParent(null);
+                ObjectPick.GetComponent<Rigidbody>().useGravity = true;
+                ObjectPick.GetComponent<Rigidbody>().isKinematic = false;
+                ObjectPick.GetComponent<Collider>().isTrigger = false;
+                ObjectPick.GetComponent<TrocarInteraction>().prenderHolograma?.Invoke();
+                ObjectPick = null;
+                herramientain = false;
+            }
         }
-        else
-        {
-            ObjectPick.transform.SetParent(null);
-            ObjectPick.GetComponent<Rigidbody>().useGravity = true;
-            ObjectPick.GetComponent<Rigidbody>().isKinematic = false;
-            ObjectPick.GetComponent<Collider>().isTrigger = false;
-            ObjectPick.GetComponent<TrocarInteraction>().prenderHolograma?.Invoke();
-            ObjectPick = null;
-            herramientain = false;
-        }
+       
         
     }
     public void GetObjectLeft()

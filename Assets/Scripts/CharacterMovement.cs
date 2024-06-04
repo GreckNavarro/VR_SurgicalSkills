@@ -8,32 +8,39 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] FootStepSound footstep;
 
-    private void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
-    private void FixedUpdate()
-    {
-        onMovement();
-    }
-    private void onMovement()
-    {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        Vector3 move = transform.right * horizontal + transform.forward * vertical;
-        Vector3 velocity = Vector3.zero;
-        if(horizontal != 0 || vertical != 0)
-        {
-            Vector3 direction = move;
+    //private void OnEnable()
+    //{
+    //    XRControllerInput.rightPrimaryAxis2D += onMovement;
+    //}
+    //private void OnDisable()
+    //{
+    //    XRControllerInput.rightPrimaryAxis2D -= onMovement;
+    //}
+
+
+    //private void Start()
+    //{
+    //    rb = GetComponent<Rigidbody>();
+    //}
+
+    //private void onMovement(Vector2 vectorInput)
+    //{
+    //    float horizontal = vectorInput.x;
+    //    float vertical = vectorInput.y;
+    //    Vector3 move = transform.right * horizontal + transform.forward * vertical;
+    //    Vector3 velocity = Vector3.zero;
+    //    if(horizontal != 0 || vertical != 0)
+    //    {
+    //        Vector3 direction = move;
             
-            velocity = direction * speed;
-            footstep.PlayFootstepSound();
-        }
-        else
-        {
-            footstep.StopFootStepSound();
-        }
-        velocity.y = rb.velocity.y;
-        rb.velocity = velocity;
-    }
+    //        velocity = direction * speed;
+    //        footstep.PlayFootstepSound();
+    //    }
+    //    else
+    //    {
+    //        footstep.StopFootStepSound();
+    //    }
+    //    velocity.y = rb.velocity.y;
+    //    rb.velocity = velocity;
+    //}
 }
