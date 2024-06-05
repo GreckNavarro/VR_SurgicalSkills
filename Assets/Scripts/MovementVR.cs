@@ -5,37 +5,44 @@ using UnityEngine;
 public class MovementVR : MonoBehaviour
 {
     public float speed = 5.0f;
-    public Transform cameraTransform;
+    Rigidbody myrb;
     public bool moveInY = false;
     public float speedRotation;
 
     private void OnEnable()
     {
-        XRControllerInput.rightPrimaryAxis2D += DebugValue;
+        XRControllerInput.rightPrimaryAxis2D += Rotate;
+        XRControllerInput.leftPrimaryAxis2D += Movement;
     }
     private void OnDisable()
     {
-        XRControllerInput.rightPrimaryAxis2D -= DebugValue;
+        XRControllerInput.rightPrimaryAxis2D -= Rotate;
+        XRControllerInput.leftPrimaryAxis2D -= Movement;
     }
 
-    public void DebugValue(Vector2 axisRightJoystick)
+    private void Start()
     {
-        Debug.Log(axisRightJoystick);
+        myrb = GetComponent<Rigidbody>();
     }
-    void Update()
+    public void Rotate(Vector2 axisRightJoystick)
     {
-        Vector3 moveDirection = cameraTransform.forward;
-
-        if (!moveInY)
-        {
-            moveDirection.y = 0;
-        }
-
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        Vector3 movement = -1 * (moveDirection * verticalInput + cameraTransform.right * horizontalInput) * speed * Time.deltaTime;
-
-        transform.Translate(movement);
+        float rotateY = axisRightJoystick.x;
+        transform.Rotate(rotateY * Vector3.up, Space.World);
     }
+    public void Movement(Vector2 axisRightJoystick)
+    {
+        float horizontalInput = axisRightJoystick.x;
+        float verticalInput = axisRightJoystick.y;
+        Vector3 camForward = Camera.main.transform.forward;
+        Vector3 camRight = Camera.main.transform.right;
+        camForward.y = 0f; 
+        camRight.y = 0f;
+        camForward.Normalize();
+        camRight.Normalize();
+
+        Vector3 direction = (camForward * verticalInput + camRight * horizontalInput).normalized * speed;
+        myrb.velocity = direction * speed;
+    }
+
+
 }
