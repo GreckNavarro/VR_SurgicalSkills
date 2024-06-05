@@ -37,8 +37,8 @@ public class SoundsSO : ScriptableObject
 
     public void LoadPreference(Slider slider)
     {
-        slider.value = currentVolume;
         currentVolume = PlayerPrefs.GetFloat(channelVolume, currentVolume);
+        slider.value = currentVolume;
         mixer.SetFloat(channelVolume, Mathf.Log10(currentVolume) * 20f);
     }
     //public void MuteVolume()
