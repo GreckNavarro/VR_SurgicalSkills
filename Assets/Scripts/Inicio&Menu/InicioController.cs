@@ -14,7 +14,7 @@ public class InicioController : MonoBehaviour
             if (Input.GetKeyDown(key))
             {
                 mySoundSelection.StartSoundSelection();
-                ChargeLevelController.instance.FadeToLevel(1);
+                ChargeLevelController.OnLevelLoad?.Invoke(1);
             }
         }
     }

@@ -17,7 +17,7 @@ public class MenuController : MonoBehaviour
     }
     public void Play()
     {
-        ChargeLevelController.instance.FadeToLevel(2);
+        ChargeLevelController.OnLevelLoad?.Invoke(2);
     }
     public void Leave()
     {
