@@ -6,9 +6,7 @@ using System;
 
 public class TrocarInteraction : Interactable
 {
-    public  Action prenderHolograma;
-    public Action offHologram;
-    public Action<Transform> hologramIdeal;
+
     [SerializeField] GameObject holograma;
     bool active = false;
 
@@ -19,12 +17,13 @@ public class TrocarInteraction : Interactable
 
     private void OnEnable()
     {
-        prenderHolograma += ChangeBool;
-        hologramIdeal += PutPosition;
+        PickUp += ChangeBool;
+        PickDown += PutPosition;
     }
     private void OnDisable()
     {
-        prenderHolograma -= ChangeBool;
+        PickUp -= ChangeBool;
+        PickDown -= PutPosition;
     }
 
     private void ChangeBool()

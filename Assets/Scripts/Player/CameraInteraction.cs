@@ -21,15 +21,13 @@ public class CameraInteraction : MonoBehaviour
 
     private void OnEnable()
     {
-        XRControllerInput.rightGripButtonPressed += GetObjectRigth;
-        XRControllerInput.rightGripButtonReleased += DejarObject;
-        XRControllerInput.leftGripButtonPressed += GetObjectLeft;
+        XRControllerInput.rightGripButtonPressed += GetObject;
+        XRControllerInput.rightGripButtonReleased += LeaveObject;
     }
     private void OnDisable()
     {
-        XRControllerInput.rightGripButtonPressed -= GetObjectRigth;
-        XRControllerInput.rightGripButtonReleased -= DejarObject;
-        XRControllerInput.leftGripButtonPressed -= GetObjectLeft;
+        XRControllerInput.rightGripButtonPressed -= GetObject;
+        XRControllerInput.rightGripButtonReleased -= LeaveObject;
     }
 
     private void Update()
@@ -45,8 +43,13 @@ public class CameraInteraction : MonoBehaviour
        
    
     }
-    public void GetObjectRigth()
+    public void DebugC()
     {
+       
+    }
+    public void GetObject()
+    {
+        Debug.Log("Hola Obetener Objeto");
         RaycastHit hit;
         if (Physics.Raycast(righController.position, righController.forward, out hit, rayDistance, LayerInteraction))
         {
@@ -59,7 +62,7 @@ public class CameraInteraction : MonoBehaviour
                 ObjectPick.transform.position = positionInteraction.position;
                 ObjectPick.transform.rotation = positionInteraction.rotation;
                 ObjectPick.GetComponent<Collider>().isTrigger = true;
-                ObjectPick.GetComponent<TrocarInteraction>().prenderHolograma?.Invoke();
+                ObjectPick.GetComponent<Interactable>().PickUp?.Invoke();
                 ObjectPick.GetComponent<Rigidbody>().useGravity = false;
                 ObjectPick.GetComponent<Rigidbody>().isKinematic = true;
                 herramientain = true;
@@ -67,15 +70,16 @@ public class CameraInteraction : MonoBehaviour
             
         }
     }
-    public void DejarObject()
+    public void LeaveObject()
     {
-        if(ObjectPick != null)
+        Debug.Log("Hola Dejar Objeto");
+        if (ObjectPick != null)
         {
             ObjectPick.GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.Continuous;
             if (isOnArea)
             {
                 ObjectPick.transform.SetParent(null);
-                ObjectPick.GetComponent<TrocarInteraction>().hologramIdeal?.Invoke(ObjectPick.transform);
+                ObjectPick.GetComponent<Interactable>().PickDown?.Invoke(ObjectPick.transform);
                 ObjectPick.layer = default;
                 ObjectPick = null;
                 herramientain = false;
@@ -87,7 +91,7 @@ public class CameraInteraction : MonoBehaviour
                 ObjectPick.GetComponent<Rigidbody>().useGravity = true;
                 ObjectPick.GetComponent<Rigidbody>().isKinematic = false;
                 ObjectPick.GetComponent<Collider>().isTrigger = false;
-                ObjectPick.GetComponent<TrocarInteraction>().prenderHolograma?.Invoke();
+                ObjectPick.GetComponent<Interactable>().PickUp?.Invoke();
                 ObjectPick = null;
                 herramientain = false;
             }
@@ -95,27 +99,7 @@ public class CameraInteraction : MonoBehaviour
        
         
     }
-    public void GetObjectLeft()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(leftController.position, leftController.forward, out hit, rayDistance, LayerInteraction))
-        {
-            if (ObjectPick == null)
-            {
-                ObjectPick = hit.transform.gameObject;
-                ObjectPick.transform.SetParent(positionInteraction);
-                ObjectPick.transform.position = positionInteraction.position;
-                ObjectPick.transform.rotation = positionInteraction.rotation;
-                ObjectPick.GetComponent<Collider>().isTrigger = true;
-                ObjectPick.GetComponent<TrocarInteraction>().prenderHolograma?.Invoke();
-                ObjectPick.GetComponent<Rigidbody>().useGravity = false;
-                ObjectPick.GetComponent<Rigidbody>().isKinematic = true;
-                herramientain = true;
-            }
-
-        }
-    }
-
+ 
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Hola");
