@@ -7,6 +7,7 @@ public class Interactable : MonoBehaviour
 {
     public Action PickUp;
     public Action<Transform> PickDown;
+
     public virtual void Interact()
     {
 
