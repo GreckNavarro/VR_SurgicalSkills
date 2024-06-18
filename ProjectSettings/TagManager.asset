@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - AreaBody
+  - RightHandCollider
+  - LeftHandCollider
   layers:
   - Default
   - TransparentFX
