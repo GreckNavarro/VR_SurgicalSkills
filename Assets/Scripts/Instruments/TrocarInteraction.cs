@@ -6,7 +6,7 @@ using System;
 
 public class TrocarInteraction : Interactable
 {
-
+    [SerializeField] GameObject correctRotation;
     [SerializeField] GameObject holograma;
     bool active = false;
 
@@ -42,6 +42,7 @@ public class TrocarInteraction : Interactable
     {
      
         holograma.SetActive(active);
+        this.transform.rotation = correctRotation.transform.rotation;
     }
 
 }

@@ -4,15 +4,40 @@ using UnityEngine;
 
 public class ColedoscopyInteraction : Interactable
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameObject correctRotation;
+
+    [SerializeField] GameObject holograma;
+    bool active = false;
+
+
+    private void OnEnable()
     {
-        
+        PickUp += ChangeBool;
+        PickDown += PutPosition;
+    }
+    private void OnDisable()
+    {
+        PickUp -= ChangeBool;
+        PickDown -= PutPosition;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void ChangeBool()
     {
-        
+        active = !active;
+        Interact();
+    }
+
+    public void PutPosition(Transform position)
+    {
+        position.position = holograma.transform.position;
+        position.rotation = holograma.transform.rotation;
+        holograma.SetActive(false);
+    }
+    public override void Interact()
+    {
+
+        holograma.SetActive(active);
+        this.transform.rotation = correctRotation.transform.rotation;
     }
 }
