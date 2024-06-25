@@ -34,6 +34,8 @@ public class CameraInteraction : MonoBehaviour
 
         XRControllerInput.rightprimaryButtonPressed += TaskGameObjectActive;
         XRControllerInput.rightsecondaryButtonPressed += TestTaskUnderline;
+
+        XRControllerInput.leftprimaryButtonPressed += ChangeStatus;
     }
     private void OnDisable()
     {
@@ -42,8 +44,17 @@ public class CameraInteraction : MonoBehaviour
 
         XRControllerInput.rightprimaryButtonPressed -= TaskGameObjectActive;
         XRControllerInput.rightsecondaryButtonPressed -= TestTaskUnderline;
+
+        XRControllerInput.leftprimaryButtonPressed -= ChangeStatus;
+
     }
 
+    void ChangeStatus()
+    {
+        Debug.Log(GameManager.Instance.CurrentState);
+        GameManager.Instance.ChangeState(GameManager.GameState.Operation);
+        Debug.Log("Presionando boton");
+    }
 
     public void TestTaskUnderline()
     {

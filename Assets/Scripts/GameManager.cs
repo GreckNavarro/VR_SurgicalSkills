@@ -5,47 +5,40 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public enum GameState
     {
-
+        PreOperation,
+        MovementRoom,
+        Operation
     }
 
-    // Update is called once per frame
-    void Update()
+    public static GameManager Instance { get; private set; }
+
+    public GameState CurrentState { get; private set; }
+
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Instance == null)
         {
-            GenerateTask(0);
+            Instance = this;
         }
-        if (Input.GetKeyDown(KeyCode.S))
+        else
         {
-            GenerateTask(1);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            GenerateTask(2);
-        }
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            GenerateTask(3);
+            Destroy(gameObject);
         }
     }
-    public async void GenerateTask(int index)
+
+    private void Start()
     {
-        Debug.Log("Empezando");
-        PanelManager.instance.UpdateTaskPending(index);
-        AnimTaskController.OnTaskView?.Invoke(true);
-        await PendingTask();
+        ChangeState(GameState.PreOperation);
     }
-    public async Task PendingTask()
+
+    public void ChangeState(GameState newState)
     {
-        Debug.Log("Entrando a la tarea");
-        await Task.Delay(1000);
-        AnimTaskController.OnTaskView?.Invoke(false);
-        AnimTaskController.OnTaskComplete?.Invoke(true);
-        Debug.Log("Termine");
-        await Task.Delay(1000);
-        AnimTaskController.OnTaskComplete?.Invoke(false);
+        CurrentState = newState;
+        Debug.Log("Game State Changed to: " + newState);
     }
+
+   
 }
+
