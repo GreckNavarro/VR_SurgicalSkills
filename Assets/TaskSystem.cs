@@ -52,6 +52,7 @@ public class TaskSystem : MonoBehaviour
         }
         if(index == tasks.Count - 1)
         {
+            GameManager.Instance.ChangeState(GameManager.GameState.MovementRoom);
             Destroy(door);
         }
         else

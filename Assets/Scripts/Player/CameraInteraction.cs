@@ -35,7 +35,6 @@ public class CameraInteraction : MonoBehaviour
         XRControllerInput.rightprimaryButtonPressed += TaskGameObjectActive;
         XRControllerInput.rightsecondaryButtonPressed += TestTaskUnderline;
 
-        XRControllerInput.leftprimaryButtonPressed += ChangeStatus;
     }
     private void OnDisable()
     {
@@ -45,16 +44,10 @@ public class CameraInteraction : MonoBehaviour
         XRControllerInput.rightprimaryButtonPressed -= TaskGameObjectActive;
         XRControllerInput.rightsecondaryButtonPressed -= TestTaskUnderline;
 
-        XRControllerInput.leftprimaryButtonPressed -= ChangeStatus;
+        
 
     }
 
-    void ChangeStatus()
-    {
-        Debug.Log(GameManager.Instance.CurrentState);
-        GameManager.Instance.ChangeState(GameManager.GameState.Operation);
-        Debug.Log("Presionando boton");
-    }
 
     public void TestTaskUnderline()
     {
@@ -66,23 +59,28 @@ public class CameraInteraction : MonoBehaviour
 
     private void Update()
     {
-
+        if (GameManager.Instance.CurrentState != GameManager.GameState.Operation)
+        {
             lineRendererleft.SetPosition(0, leftController.position);
             lineRendererleft.SetPosition(1, leftController.position + leftController.forward * rayDistance);
             lineRendererright.SetPosition(0, righController.position);
             lineRendererright.SetPosition(1, righController.position + righController.forward * rayDistance);
             Debug.DrawRay(leftController.position, leftController.forward * rayDistance, Color.green);
             Debug.DrawRay(righController.position, righController.forward * rayDistance, Color.green);
+        }
+           
    
     }
     
     public void TaskGameObjectActive()
     {
-        lineRendererleft.enabled = TaskActive;
-        lineRendererright.enabled = TaskActive;
-        TaskActive = !TaskActive;
-        Tablet.gameObject.SetActive(TaskActive);
-
+        if(GameManager.Instance.CurrentState != GameManager.GameState.Operation)
+        {
+            lineRendererleft.enabled = TaskActive;
+            lineRendererright.enabled = TaskActive;
+            TaskActive = !TaskActive;
+            Tablet.gameObject.SetActive(TaskActive);
+        }
 
 
     }

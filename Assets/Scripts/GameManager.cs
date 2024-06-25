@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] OperationMode operationScript;
+    [SerializeField] MovementVR MovementC;
     public enum GameState
     {
         PreOperation,
@@ -36,8 +38,22 @@ public class GameManager : MonoBehaviour
     public void ChangeState(GameState newState)
     {
         CurrentState = newState;
-        Debug.Log("Game State Changed to: " + newState);
+        switch (CurrentState)
+        {
+            case GameState.MovementRoom:
+                break;
+            case GameState.Operation:
+                operationScript.enabled = true;
+                MovementC.enabled = false;
+                break;
+            case GameState.PreOperation:
+                break;
+
+        }
     }
+
+
+
 
    
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class ColedoscopyInteraction : Interactable
 {
     [SerializeField] GameObject correctRotation;
+    [SerializeField] GameObject Trocar;
 
     [SerializeField] GameObject holograma;
 
@@ -15,7 +16,7 @@ public class ColedoscopyInteraction : Interactable
     bool inPosition = false;
 
 
-    //ROTATE
+    
 
     [SerializeField] Transform cylinder; 
     public float rotationSpeed = 100f;
@@ -33,12 +34,21 @@ public class ColedoscopyInteraction : Interactable
     {
         PickUp += ChangeBool;
         PickDown += PutPosition;
+
+        XRControllerInput.rightPrimaryAxis2D += RotateTrocar;
+        XRControllerInput.rightprimaryButtonPressed += CameraStatic;
+
     }
     private void OnDisable()
     {
         PickUp -= ChangeBool;
         PickDown -= PutPosition;
+
+        XRControllerInput.rightprimaryButtonPressed -= CameraStatic;
+
+
     }
+
 
 
     private void ChangeBool()
@@ -55,16 +65,16 @@ public class ColedoscopyInteraction : Interactable
         Destroy(holograma);
 
         inPosition = true;
+        GameManager.Instance.ChangeState(GameManager.GameState.Operation);
         cameraCol.gameObject.SetActive(true);
 
 
     }
-    private void Update()
+
+    public void CameraStatic()
     {
-        if(inPosition == true && (GameManager.Instance.CurrentState == GameManager.GameState.Operation))
-        {
-            RotateTrocar();
-        }
+        if(inPosition == true)
+        XRControllerInput.rightPrimaryAxis2D -= RotateTrocar;
     }
     public override void Interact()
     {
@@ -73,63 +83,52 @@ public class ColedoscopyInteraction : Interactable
         this.transform.rotation = correctRotation.transform.rotation;
     }
 
-    public void RotateTrocar()
+    public void RotateTrocar(Vector2 axisRightJoystick)
     {
-        if (Input.GetKey(KeyCode.W))
+        if(inPosition == true)
         {
-            RotateAroundAxis(Vector3.right, rotationSpeed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            RotateAroundAxis(Vector3.right, -rotationSpeed * Time.deltaTime);
-        }
+            float horizontalInput = axisRightJoystick.y;
+            float verticalInput = axisRightJoystick.x;
 
-        // Rotación en el eje Z
-        if (Input.GetKey(KeyCode.A))
-        {
-            RotateAroundAxis(Vector3.forward, rotationSpeed * Time.deltaTime);
+
+            if (horizontalInput != 0)
+            {
+                RotateAroundAxis(Vector3.right, -horizontalInput * rotationSpeed * Time.deltaTime);
+            }
+
+
+            if (verticalInput != 0)
+            {
+                RotateAroundAxis(Vector3.forward, -verticalInput * rotationSpeed * Time.deltaTime);
+            }
+
+            Trocar.transform.rotation = this.transform.rotation;
         }
-        if (Input.GetKey(KeyCode.D))
-        {
-            RotateAroundAxis(Vector3.forward, -rotationSpeed * Time.deltaTime);
-        }
+       
+
+
+
     }
 
     void RotateAroundAxis(Vector3 axis, float angle)
     {
-        // Calcular la nueva rotación propuesta
         Quaternion targetRotation = Quaternion.Euler(currentRotation) * Quaternion.AngleAxis(angle, axis);
-
-        // Obtener los ángulos eulerianos de la rotación propuesta
         Vector3 proposedEulerAngles = targetRotation.eulerAngles;
-
-        // Limitar la rotación en el eje X dentro del rango especificado
         proposedEulerAngles.x = ClampAngle(proposedEulerAngles.x, minRotationAngle, maxRotationAngle);
-
-        // Limitar la rotación en el eje Z dentro del rango especificado
         proposedEulerAngles.z = ClampAngle(proposedEulerAngles.z, minRotationAngle, maxRotationAngle);
-
-        // Aplicar la rotación
+        proposedEulerAngles.y = 0;
         transform.localEulerAngles = proposedEulerAngles;
-
-        // Actualizar la rotación actual
         currentRotation = transform.localEulerAngles;
     }
 
     float ClampAngle(float angle, float min, float max)
     {
-        // Normalizar el ángulo al rango [0, 360)
         angle = Mathf.Repeat(angle, 360f);
-
-        // Ajustar el ángulo para que esté dentro del rango [min, max]
         if (angle > 180f)
         {
             angle -= 360f;
         }
-
         angle = Mathf.Clamp(angle, min, max);
-
-        // Convertir el ángulo de vuelta al rango [0, 360) antes de devolverlo
         angle = Mathf.Repeat(angle, 360f);
 
         return angle;
