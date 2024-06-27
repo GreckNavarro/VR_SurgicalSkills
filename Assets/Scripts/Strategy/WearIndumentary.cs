@@ -8,7 +8,7 @@ namespace StrategyPattern
 {
     public class WearIndumentary : MonoBehaviour, ITask
     {
-        [SerializeField] SkinnedMeshRenderer materialToApply;
+        [SerializeField] Material materialToApply;
         [SerializeField] SkinnedMeshRenderer objectWithMaterial1;
         [SerializeField] SkinnedMeshRenderer objectWithMaterial2;
 
@@ -27,16 +27,9 @@ namespace StrategyPattern
         {
             Debug.Log("Cogí el guante");
 
-            // Clonar los materiales para evitar cambiar el material original
-            Material[] newMaterials = new Material[materialToApply.materials.Length];
-            for (int i = 0; i < materialToApply.materials.Length; i++)
-            {
-                newMaterials[i] = new Material(materialToApply.materials[i]);
-            }
-
-            // Aplicar los materiales clonados a los objetos objetivo
-            objectWithMaterial1.materials = newMaterials;
-            objectWithMaterial2.materials = newMaterials;
+        
+            objectWithMaterial1.material = materialToApply;
+            objectWithMaterial2.material = materialToApply;
 
             DesactivateTask();
         }

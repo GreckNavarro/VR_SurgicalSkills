@@ -7,6 +7,22 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] OperationMode operationScript;
     [SerializeField] MovementVR MovementC;
+    [SerializeField] ToolActive systemTools;
+
+
+    private void OnEnable()
+    {
+        ColedoscopyInteraction.ColocateStaticCamera += ActiveScriptTools;
+
+    }
+    private void OnDisable()
+    {
+        ColedoscopyInteraction.ColocateStaticCamera -= ActiveScriptTools;
+    }
+    public void ActiveScriptTools()
+    {
+        systemTools.enabled = true;
+    }
     public enum GameState
     {
         PreOperation,

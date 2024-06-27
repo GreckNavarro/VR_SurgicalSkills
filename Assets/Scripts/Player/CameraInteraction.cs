@@ -67,6 +67,13 @@ public class CameraInteraction : MonoBehaviour
             lineRendererright.SetPosition(1, righController.position + righController.forward * rayDistance);
             Debug.DrawRay(leftController.position, leftController.forward * rayDistance, Color.green);
             Debug.DrawRay(righController.position, righController.forward * rayDistance, Color.green);
+            Debug.Log(GameManager.Instance.CurrentState);
+                
+        }
+        else
+        {
+            lineRendererleft.enabled = false;
+            lineRendererright.enabled = false;
         }
            
    

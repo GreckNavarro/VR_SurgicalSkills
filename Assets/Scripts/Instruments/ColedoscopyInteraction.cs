@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ColedoscopyInteraction : Interactable
 {
@@ -14,6 +15,8 @@ public class ColedoscopyInteraction : Interactable
     bool active = false;
 
     bool inPosition = false;
+    public static Action ColocateStaticCamera;
+
 
 
     
@@ -65,6 +68,7 @@ public class ColedoscopyInteraction : Interactable
         Destroy(holograma);
 
         inPosition = true;
+        Debug.Log("Cambiando a Operation");
         GameManager.Instance.ChangeState(GameManager.GameState.Operation);
         cameraCol.gameObject.SetActive(true);
 
@@ -74,6 +78,7 @@ public class ColedoscopyInteraction : Interactable
     public void CameraStatic()
     {
         if(inPosition == true)
+        ColocateStaticCamera?.Invoke();        
         XRControllerInput.rightPrimaryAxis2D -= RotateTrocar;
     }
     public override void Interact()
